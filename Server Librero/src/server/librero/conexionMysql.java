@@ -91,7 +91,18 @@ public class conexionMysql {
         }
         return pass;
     }
-        
+    
+    public String existeUsuario(String consulta) throws SQLException{
+        String user="";
+        Statement st;
+        ResultSet rs;
+        st = conexion.createStatement();
+        rs = st.executeQuery(consulta);
+        while (rs.next()) {            
+            user+=rs.getString(1);
+        }
+        return user;
+    }
     
     public ArrayList todosLosLibros(String consulta) throws SQLException{
         ArrayList<String[]> libritos=new ArrayList<>();

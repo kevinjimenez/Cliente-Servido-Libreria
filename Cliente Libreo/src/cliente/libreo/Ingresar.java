@@ -25,14 +25,23 @@ public class Ingresar {
     
     public void ingresandoUser() throws IOException, ClassNotFoundException, InterruptedException{
         enviarSolicitud.enviarMSJActualizar(cliente, "ingresarCliente");
-                if (recibirInformacion.recibirConfirmacionDatos(cliente).equals("ingresando")) {                                    
-                    enviarSolicitud.enviarLogin(cliente, userName, userPassword);                
-                    if (recibirInformacion.recibirConfirmacion(cliente)) {                    
-                        enviarSolicitud.enviarConfirmacion(cliente);
-                        System.out.println("** BIENVENIDO **");
-                        new consolaUsuarios(cliente).listaLibrosDisponibles();                    
-                    }
+        enviarSolicitud.enviarLogin(cliente, userName, userPassword);
+        String tipo=recibirInformacion.recibirConfirmacionDatos(cliente);         
+            if (tipo.equals("ingresando")) {                                                                       
+                if (recibirInformacion.recibirConfirmacion(cliente)) {                    
+                    enviarSolicitud.enviarConfirmacion(cliente);
+                    System.out.println("** BIENVENIDO **");
+                    new consolaUsuarios(cliente).listaLibrosDisponibles();                    
                 }
+            }
+            if (tipo.equals("noregistraso")) {
+                System.err.println("no esta registrado \t ** REGISTRATE **");
+                new login().menu();
+            }
+            if (tipo.equals("passMalo")) {
+                System.err.println("--> contrasena no coincide intenta ingresar otra vez <--");
+                new login().menu();
+        }
     }
     
             

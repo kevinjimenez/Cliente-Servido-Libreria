@@ -53,15 +53,6 @@ public class login {
                 System.out.println("contrasena:");
                 pass=in.readLine();            
                 new Ingresar(cliente, usr, pass).ingresandoUser();
-//                enviarSolicitud.enviarMSJActualizar(cliente, "ingresarCliente");
-//                if (recibirInformacion.recibirConfirmacionDatos(cliente).equals("ingresando")) {                                    
-//                    enviarSolicitud.enviarLogin(cliente, usr, pass);                
-//                    if (recibirInformacion.recibirConfirmacion(cliente)) {                    
-//                        enviarSolicitud.enviarConfirmacion(cliente);
-//                        System.out.println("BIENVENIDO");
-//                        new consolaUsuarios(cliente).listaLibrosDisponibles();                    
-//                    }
-//                }
                 break;
             case 3:
                 System.out.println("ADIOS");

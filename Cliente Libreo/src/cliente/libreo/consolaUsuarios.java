@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -21,14 +23,20 @@ public class consolaUsuarios {
     BufferedReader in;
     String command="",ayuda;
     public static ArrayList<String[]> libros;
+    //public ArrayList<String[]> misLibros;
+    HashMap<String, String> misLibros;
+    String codBook="";
+    String nombreLibro="";
 
     public consolaUsuarios(Socket cliente) {
         this.cliente = cliente;
         in=new BufferedReader(new InputStreamReader(System.in));
+        //misLibros=new ArrayList<>();
+        misLibros=new HashMap<>();
     }
     
     public void listaLibrosDisponibles() throws IOException, ClassNotFoundException, InterruptedException{
-        System.out.println("Cliente > commando");
+        System.out.println("Cliente > Ingrese comando");
         command=in.readLine();
         switch(command){
             case "--listar":
@@ -37,33 +45,36 @@ public class consolaUsuarios {
                 Thread.sleep(2000);
                 libros=recibirInformacion.recibirLibros(cliente);
                 if (libros.isEmpty()) {
-                    System.out.println("No se encuentra Ningun libro !!!");                    
+                    System.out.println("\t!!! No se encuentra Ningun libro !!!");                    
                 }
-                for (Iterator<String[]> iterator = libros.iterator(); iterator.hasNext();) {
-                    String[] next = iterator.next();
+                for (Iterator<String[]> iterator = libros.iterator(); iterator.hasNext();) {                    
+                    String[] next = iterator.next();                    
                     System.out.println("Codigo: "+next[1]+"\tNombre libro: "+next[0]);
                 }            
                 enviarSolicitud.enviarConfirmacion(cliente);            
                 listaLibrosDisponibles();
                 break;
             case "descargar":
-                System.out.println("Cliente> codigo del libro a descargar");
+                System.out.println("Cliente> Ingrese el CODIGO del libro a descargar: ");
                 String cod=in.readLine();
                 enviarSolicitud.enviarMSJActualizar(cliente, "descarga");
                 enviarSolicitud.enviarCodigoibro(cliente, cod);
                 System.out.println("Descargando..*****");
                 libros=recibirInformacion.recibirLibros(cliente);                                               
-                for (Iterator<String[]> iterator = libros.iterator(); iterator.hasNext();) {
+                for (Iterator<String[]> iterator = libros.iterator(); iterator.hasNext();) {                    
                     String[] next = iterator.next();                
-                    Thread.sleep(3000);
-                    System.out.println("Codigo: "+next[1]+"\tNombre libro: "+next[0]);
-                }
-                System.out.println(recibirInformacion.recibirConfirmacionDatos(cliente));
+                    Thread.sleep(2000);
+                    System.out.println("Codigo: "+next[1]+"\tNombre libro: "+next[0]);                    
+                    codBook=next[1];
+                    nombreLibro=next[0];
+                    misLibros.put(codBook, nombreLibro);
+                }                                                
+                System.err.println(recibirInformacion.recibirConfirmacionDatos(cliente));
                 enviarSolicitud.enviarConfirmacion(cliente);
                 listaLibrosDisponibles();            
                 break;
             case "cargar":
-                System.out.println("Cliente > ingrese los siguientes datos obligatorios:");
+                System.out.println("Cliente > Ingrese los siguientes datos obligatorios:");
                 System.out.println("AUTOR:");
                 String autor=in.readLine();                                
                 System.out.println("PAIS:");
@@ -74,13 +85,15 @@ public class consolaUsuarios {
                 enviarSolicitud.enviarCaomposLibro(cliente, autor, pais, nameLibro);
                 System.out.println(recibirInformacion.recibirConfirmacionDatos(cliente));
                 Thread.sleep(3000);
-                System.out.println("completado");
+                System.out.println("\tcompletado.");
                 enviarSolicitud.enviarConfirmacion(cliente);
                 listaLibrosDisponibles(); 
                 break;
             case "help":
-                enviarSolicitud.enviarMSJActualizar(cliente, "ayuda");                
+                enviarSolicitud.enviarMSJActualizar(cliente, "ayuda");
+                System.out.println("********************************");
                 System.out.println(recibirInformacion.recibirConfirmacionDatos(cliente));
+                System.out.println("********************************");                
                 enviarSolicitud.enviarConfirmacion(cliente);
                 listaLibrosDisponibles();
                 break;
@@ -95,6 +108,18 @@ public class consolaUsuarios {
                 System.out.println(recibirInformacion.recibirConfirmacionDatos(cliente));
                 enviarSolicitud.enviarConfirmacion(cliente);                
                 System.exit(0);
+                break;
+            case "mis descargas":
+                if (misLibros.isEmpty()) {
+                    System.out.println("\t no hay descargas");
+                }else{
+                    System.err.println("\t MIS LIBROS DESCARGADOS");
+                    for (Map.Entry<String, String> entry : misLibros.entrySet()) {                        
+                        String value = entry.getValue();
+                        System.out.println("libro: "+value);
+                }
+                }                
+                listaLibrosDisponibles();
                 break;
             default:
                     System.err.println("! COMMANDO INVALIDO !");
