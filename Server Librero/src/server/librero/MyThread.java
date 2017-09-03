@@ -72,8 +72,7 @@ public class MyThread implements  Runnable{
                                     case "descarga":
                                         codLibro=recibirInformacionServer.tomandoCodigoLibro(cliente);
                                         System.out.println("Cliente [ "+logearse[0]+" ] > petición [" + confirmacionInformacionRecibida +  "]");                                    
-                                        fecha = new Date();        
-                                        System.out.println("khe");
+                                        fecha = new Date();                                                
                                         descargas=consultaSQL.descargando("select * from LIBRO where COD_LIBRO="+"'"+codLibro+"'");                                    
                                         
                                         if (descargas.isEmpty()) {
@@ -89,7 +88,7 @@ public class MyThread implements  Runnable{
                                         fechaServicio=fecha.toString();                                    
                                         consultaSQL.newServicio(idUsuario, idLibro, fechaServicio, confirmacionInformacionRecibida);
                                         enviarInformacionServidor.enviarInformacion(cliente, descargas);  
-                                        enviarInformacionServidor.confirmacionClienteActualizacion(cliente, "descargar completa");
+                                        enviarInformacionServidor.confirmacionClienteActualizacion(cliente, "descarga completa");
                                         confirmacionInformacionRecibida=recibirInformacionServer.recibirConfirmacion(cliente);                                    
                                         confirmacionInformacionRecibida="";
                                         break;
@@ -120,12 +119,18 @@ public class MyThread implements  Runnable{
                                         confirmacionInformacionRecibida=recibirInformacionServer.recibirConfirmacion(cliente);                                    
                                         confirmacionInformacionRecibida="";
                                         break;
+                                    case "close":
+                                        System.out.println("Cliente [ "+logearse[0]+"]  > petición [" + confirmacionInformacionRecibida +  "]");
+                                        enviarInformacionServidor.confirmacionClienteActualizacion(cliente, logearse[0]+" cierra cesion ");
+                                        confirmacionInformacionRecibida=recibirInformacionServer.recibirConfirmacion(cliente);                                    
+                                        confirmacionInformacionRecibida="";                                        
+                                        break;
                                     case "salir":
                                         System.out.println("Cliente [ "+logearse[0]+"]  > petición [" + confirmacionInformacionRecibida +  "]"); 
                                         enviarInformacionServidor.confirmacionClienteActualizacion(cliente, logearse[0]+" dice adios ");                                   
                                         confirmacionInformacionRecibida=recibirInformacionServer.recibirConfirmacion(cliente);                                    
                                         confirmacionInformacionRecibida="";                                        
-                                        break;
+                                        break;                                    
                                     default:
                                         System.out.println(";v");
                                 }

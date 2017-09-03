@@ -84,11 +84,17 @@ public class consolaUsuarios {
                 enviarSolicitud.enviarConfirmacion(cliente);
                 listaLibrosDisponibles();
                 break;
-            case "exit":
-                enviarSolicitud.enviarMSJActualizar(cliente, "salir");
+            case "close":
+                enviarSolicitud.enviarMSJActualizar(cliente, "close");
                 System.out.println(recibirInformacion.recibirConfirmacionDatos(cliente));
                 enviarSolicitud.enviarConfirmacion(cliente);
-                System.exit(0);                
+                new login().menu();                
+                break;
+            case  "exit":
+                enviarSolicitud.enviarMSJActualizar(cliente, "salir");
+                System.out.println(recibirInformacion.recibirConfirmacionDatos(cliente));
+                enviarSolicitud.enviarConfirmacion(cliente);                
+                System.exit(0);
                 break;
             default:
                     System.err.println("! COMMANDO INVALIDO !");
