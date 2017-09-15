@@ -39,6 +39,7 @@ create table LIBRO
    ID_AUTOR                       int,
    NOMBRE_LIBRO                   varchar(50)                    not null,
    COD_LIBRO                      varchar(30)                    not null,
+   PATH_LIBRO						BLOB					not null,
    primary key (ID_LIBRO)
 )
 ;
