@@ -8,14 +8,17 @@ package server.librero;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
+import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author kevin
  */
-public class enviarInformacionServidor {
+public class enviarInformacionServidor implements Serializable {
     public static void confirmacionClienteActualizacion(Socket cliente, String msj) throws IOException{
         ObjectOutputStream out=null;
         out = new ObjectOutputStream(cliente.getOutputStream());
@@ -34,6 +37,11 @@ public class enviarInformacionServidor {
         ObjectOutputStream out=null;
         out=new ObjectOutputStream(cliente.getOutputStream());
         out.writeObject(libro);
+    }
+    public static void  enviarLibros(Socket cliente,HashMap<String,Blob> tusLibros) throws IOException{
+        ObjectOutputStream out = null;
+        out=new ObjectOutputStream(cliente.getOutputStream());
+        out.writeObject(tusLibros);
     }
     
     

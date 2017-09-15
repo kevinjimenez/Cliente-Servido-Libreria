@@ -7,14 +7,17 @@ package cliente.libreo;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.net.Socket;
+import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author kevin
  */
-public class recibirInformacion {
+public class recibirInformacion{
     
     public  static String recibirConfirmacionDatos(Socket cliente) throws IOException, ClassNotFoundException{
         String confirmacion="";
@@ -43,6 +46,12 @@ public class recibirInformacion {
         listLibros=(ArrayList) in.readObject();
         return listLibros;
     }
+//    public static HashMap recibirArchivos(Socket cliente) throws IOException, ClassNotFoundException{
+//        HashMap<String,Blob> archivosDescarga = new HashMap<>();
+//        ObjectInputStream in = new ObjectInputStream(cliente.getInputStream());
+//        archivosDescarga=(HashMap<String, Blob>) in.readObject();
+//        return archivosDescarga;
+//    }
     
     
             

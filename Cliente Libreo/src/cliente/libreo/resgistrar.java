@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.sql.SQLException;
 
 
 /**
@@ -23,7 +24,7 @@ public class resgistrar {
         this.cliente = cliente;
     }
     
-    public void resgistrando() throws IOException, ClassNotFoundException, InterruptedException{
+    public void resgistrando() throws IOException, ClassNotFoundException, InterruptedException, SQLException{
         String[] datos= new String[2];
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Nombre:");
@@ -31,8 +32,7 @@ public class resgistrar {
         System.out.println("password:");
         clave = in.readLine();        
         datos[0]=apodo;
-        datos[1]=clave;
-        System.out.println(datos[0]+ "," + datos[1]);
+        datos[1]=clave;        
         if (recibirInformacion.recibirConfirmacionDatos(cliente).equals("ok")) {
             enviarSolicitud.enviarInformacion(cliente, datos);            
             System.err.println("! Usuario registrado Correctamente !");

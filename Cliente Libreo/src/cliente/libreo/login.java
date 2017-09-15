@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.sql.SQLException;
 
 /**
  *
@@ -26,11 +27,13 @@ public class login {
     }
     
     
-    public void menu() throws IOException, ClassNotFoundException, InterruptedException{
+    public void menu() throws IOException, ClassNotFoundException, InterruptedException, SQLException{
         System.out.println("Cliente> Inicio");
         System.out.println("1. Registrate");
         System.out.println("2. Login");
-        System.out.println("3. Exit");                
+        System.out.println("3. Exit");
+        System.err.println("================");
+        System.out.println("Ingrese una Opcion:");
         str=in.readLine();        
         if (!Validacion.isNumeric(str)) {
             System.err.println("Escoja una opcion numerica");
@@ -47,7 +50,7 @@ public class login {
             case 2:
                 cliente=new Socket("localhost",5000);
                 String usr,pass;                            
-                System.out.println("Cliente> Inicio"); 
+                System.out.println("\nCliente> Inicio"); 
                 System.out.println("usuario: ");
                 usr=in.readLine();
                 System.out.println("contrasena:");
@@ -62,33 +65,7 @@ public class login {
                 System.err.println("! OPCION INCORRECTA !");
                 new login().menu();
         }
-//        
-//        if(opcion==1){
-//            cliente = new Socket("localhost",5000);   
-//            enviarSolicitud.enviarMSJActualizar(cliente, "RegistrarCliente");
-//            if (recibirInformacion.recibirConfirmacionDatos(cliente).equals("registrado")) {                
-//                new resgistrar(cliente).resgistrando();                
-//            }                                       
-//        }
-//         if (opcion==2) {            
-//            cliente=new Socket("localhost",5000);
-//            String usr,pass;            
-//            String[] informacion;
-//            System.out.println("Cliente> Inicio"); 
-//            System.out.println("usuario: ");
-//            usr=in.readLine();
-//            System.out.println("contrasena:");
-//            pass=in.readLine();            
-//            enviarSolicitud.enviarMSJActualizar(cliente, "ingresarcliente");
-//            if (recibirInformacion.recibirConfirmacionDatos(cliente).equals("ingresando")) {                
-//                enviarSolicitud.enviarLogin(cliente, usr, pass);                
-//                if (recibirInformacion.recibirConfirmacion(cliente)) {                    
-//                    enviarSolicitud.enviarConfirmacion(cliente);
-//                    new consolaUsuarios(cliente).listaLibrosDisponibles();                    
-//                }
-//            }
-//        }
-        
+       
     }
     
     

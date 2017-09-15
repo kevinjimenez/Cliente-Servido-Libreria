@@ -22,11 +22,12 @@ public class enviarSolicitud {
         ObjectOutputStream out = new ObjectOutputStream(cliente.getOutputStream());
         out.writeObject(codLibro); 
     }
-    public static void enviarCaomposLibro(Socket cliente, String Autor,String Pais,String Libro) throws IOException{
-        String anadirLibro[]=new String[3];
+    public static void enviarCaomposLibro(Socket cliente, String Autor,String Pais,String Libro,String path) throws IOException{
+        String anadirLibro[]=new String[4];
         anadirLibro[0]=Autor;
         anadirLibro[1]=Pais;
         anadirLibro[2]=Libro;
+        anadirLibro[3]=path;
         ObjectOutputStream out = new ObjectOutputStream(cliente.getOutputStream());
         out.writeObject(anadirLibro);
         

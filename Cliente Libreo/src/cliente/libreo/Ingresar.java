@@ -7,6 +7,7 @@ package cliente.libreo;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Ingresar {
         this.userPassword = userPassword;
     }
     
-    public void ingresandoUser() throws IOException, ClassNotFoundException, InterruptedException{
+    public void ingresandoUser() throws IOException, ClassNotFoundException, InterruptedException, SQLException{
         enviarSolicitud.enviarMSJActualizar(cliente, "ingresarCliente");
         enviarSolicitud.enviarLogin(cliente, userName, userPassword);
         String tipo=recibirInformacion.recibirConfirmacionDatos(cliente);         
